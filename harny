@@ -27,7 +27,7 @@ send_message() {
                 }
             ]
         }' 2>/dev/null)
-    echo "$response" | jq '.content[0].text'
+    echo "$response" | jq '.content[] | select(.type == "text") | .text'
 
     local input_tokens
     local output_tokens
@@ -44,4 +44,4 @@ send_message() {
 }
 
 #list_models
-send_message "Say Hello"
+send_message "$1"
